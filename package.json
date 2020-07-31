@@ -1,6 +1,6 @@
 {
   "name": "@goto-bus-stop/envify",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Selectively replace Node-style environment variables with plain strings.",
   "main": "index.js",
   "scripts": {
