@@ -1,4 +1,6 @@
-# envify  [![Build Status](https://secure.travis-ci.org/hughsk/envify.png?branch=master)](http://travis-ci.org/hughsk/envify) [![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges) #
+# @goto-bus-stop/envify  [![Build Status](https://secure.travis-ci.org/goto-bus-stop/envify.png?branch=fork)](http://travis-ci.org/goto-bus-stop/envify) [![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges) #
+
+> This fork of [envify](https://github.com/hughsk/envify) supports modern JavaScript syntax.
 
 Selectively replace Node-style environment variables with plain strings.
 Available as a standalone CLI tool and a
@@ -42,7 +44,7 @@ if ("production" === "development") {
 ```
 
 By running this through a good minifier (e.g.
-[UglifyJS2](https://github.com/mishoo/UglifyJS)), the above code would be
+[terser](https://github.com/terser/terser)), the above code would be
 stripped out completely.
 
 However, if you bundled the same script with `NODE_ENV` set to `development`:

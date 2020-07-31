@@ -1,5 +1,5 @@
 {
-  "name": "envify",
+  "name": "@goto-bus-stop/envify",
   "version": "4.1.0",
   "description": "Selectively replace Node-style environment variables with plain strings.",
   "main": "index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hughsk/envify.git"
+    "url": "git://github.com/goto-bus-stop/envify.git"
   },
   "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughskennedy.com/)",
   "license": "MIT",
