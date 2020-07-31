@@ -13,13 +13,13 @@ Works best in combination with [uglifyify](http://github.com/hughsk/uglifyify).
 If you're using the module with Browserify:
 
 ``` bash
-npm install envify browserify
+npm install @goto-bus-stop/envify browserify
 ```
 
 Or, for the CLI:
 
 ``` bash
-sudo npm install -g envify
+sudo npm install -g @goto-bus-stop/envify
 ```
 
 ## Usage ##
