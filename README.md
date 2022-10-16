@@ -1,4 +1,4 @@
-# @browserify/envify  [![Build Status](https://secure.travis-ci.org/browserify/envify.png?branch=fork)](http://travis-ci.org/browserify/envify) [![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges) #
+# @browserify/envify [![Build status](https://github.com/browserify/envify/actions/workflows/ci.yml/badge.svg)](https://github.com/browserify/envify/actions/workflows/ci.yml) [![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges) #
 
 Selectively replace Node-style environment variables with plain strings.
 Available as a standalone CLI tool and a
