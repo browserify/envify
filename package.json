@@ -1,6 +1,6 @@
 {
   "name": "@browserify/envify",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Selectively replace Node-style environment variables with plain strings.",
   "main": "index.js",
   "scripts": {
