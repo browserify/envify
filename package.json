@@ -18,6 +18,7 @@
   "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughskennedy.com/)",
   "license": "MIT",
   "devDependencies": {
+    "standard": "^17.0.0",
     "tap-spec": "^5.0.0",
     "tape": "^5.0.1"
   },

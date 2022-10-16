@@ -1,11 +1,11 @@
-var acorn = require('acorn-node')
-  , dash = require('dash-ast')
-  , msplice = require('multisplice')
-  , through = require('through2')
+const acorn = require('acorn-node')
+const dash = require('dash-ast')
+const msplice = require('multisplice')
+const through = require('through2')
 
-var processEnvPattern = /\bprocess\.env\b/
+const processEnvPattern = /\bprocess\.env\b/
 
-function equalNodes(a, b) {
+function equalNodes (a, b) {
   if (a.type !== b.type) return false
   switch (a.type) {
     case 'Literal': return a.value === b.value
@@ -15,71 +15,73 @@ function equalNodes(a, b) {
   return false
 }
 
-module.exports = function(rootEnv) {
+module.exports = function (rootEnv) {
   rootEnv = rootEnv || process.env || {}
 
-  return function envify(file, argv) {
+  return function envify (file, argv) {
     if (/\.json$/.test(file)) return through()
 
-    var buffer = []
+    const buffer = []
     argv = argv || {}
 
     return through(write, flush)
 
-    function write(data, enc, cb) {
+    function write (data, enc, cb) {
       buffer.push(data)
       cb()
     }
 
-    function transform(source, envs) {
-      var args  = [].concat(envs[0]._ || []).concat(envs[1]._ || [])
-      var purge = args.indexOf('purge') !== -1
-      var replacements = []
+    function transform (source, envs) {
+      const args = [].concat(envs[0]._ || []).concat(envs[1]._ || [])
+      const purge = args.indexOf('purge') !== -1
+      const replacements = []
 
-      function match(node) {
+      function match (node) {
         return (
-          node.type === 'MemberExpression'
-          && node.object.type === 'MemberExpression'
-          && node.object.computed === false
-          && node.object.object.type === 'Identifier'
-          && node.object.object.name === 'process'
-          && node.object.property.type === 'Identifier'
-          && node.object.property.name === 'env'
-          && (node.computed ? node.property.type === 'Literal' : node.property.type === 'Identifier')
+          node.type === 'MemberExpression' &&
+          node.object.type === 'MemberExpression' &&
+          node.object.computed === false &&
+          node.object.object.type === 'Identifier' &&
+          node.object.object.name === 'process' &&
+          node.object.property.type === 'Identifier' &&
+          node.object.property.name === 'env' &&
+          (node.computed ? node.property.type === 'Literal' : node.property.type === 'Identifier')
         )
       }
 
-      var ast = acorn.parse(source)
+      const ast = acorn.parse(source)
 
-      dash(ast, { leave: function(node) {
-        if (match(node)) {
-          var key = node.property.name || node.property.value
-          for (var i = 0; i < envs.length; i++) {
-            var value = envs[i][key]
-            if (value !== undefined) {
-              replacements.push({ node: node, value: JSON.stringify(value) })
-              return
+      dash(ast, {
+        leave: function (node) {
+          if (match(node)) {
+            const key = node.property.name || node.property.value
+            for (let i = 0; i < envs.length; i++) {
+              const value = envs[i][key]
+              if (value !== undefined) {
+                replacements.push({ node, value: JSON.stringify(value) })
+                return
+              }
             }
-          }
-          if (purge) {
-            replacements.push({ node: node, value: 'undefined' })
-          }
-        } else if (node.type === 'AssignmentExpression') {
-          for (var i = 0; i < replacements.length; ++i) {
-            if (equalNodes(replacements[i].node, node.left)) {
-              replacements.splice(i, 1)
+            if (purge) {
+              replacements.push({ node, value: 'undefined' })
+            }
+          } else if (node.type === 'AssignmentExpression') {
+            for (let i = 0; i < replacements.length; ++i) {
+              if (equalNodes(replacements[i].node, node.left)) {
+                replacements.splice(i, 1)
+              }
             }
           }
         }
-      } })
+      })
 
-      var splicer = msplice(source)
+      const splicer = msplice(source)
       if (replacements.length > 0) {
         replacements.sort(function (a, b) {
           return b.start - a.start
         })
-        for (var i = 0; i < replacements.length; i++) {
-          var r = replacements[i]
+        for (let i = 0; i < replacements.length; i++) {
+          const r = replacements[i]
           splicer.splice(r.node.start, r.node.end, r.value)
         }
       }
@@ -87,13 +89,13 @@ module.exports = function(rootEnv) {
       return splicer.toString()
     }
 
-    function flush(cb) {
-      var source = buffer.join('')
+    function flush (cb) {
+      let source = buffer.join('')
 
       if (processEnvPattern.test(source)) {
         try {
           source = transform(source, [argv, rootEnv])
-        } catch(err) {
+        } catch (err) {
           return this.emit('error', err)
         }
       }
