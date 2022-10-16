@@ -4,7 +4,9 @@
   "description": "Selectively replace Node-style environment variables with plain strings.",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js | tap-spec"
+    "lint": "standard",
+    "tests-only": "node test.js | tap-spec",
+    "test": "npm run lint && npm run tests-only"
   },
   "bin": {
     "envify": "bin/envify"
