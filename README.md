@@ -1,28 +1,26 @@
-# @goto-bus-stop/envify  [![Build Status](https://secure.travis-ci.org/goto-bus-stop/envify.png?branch=fork)](http://travis-ci.org/goto-bus-stop/envify) [![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges) #
-
-> This fork of [envify](https://github.com/hughsk/envify) supports modern JavaScript syntax.
+# @browserify/envify  [![Build Status](https://secure.travis-ci.org/browserify/envify.png?branch=fork)](http://travis-ci.org/browserify/envify) [![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges) #
 
 Selectively replace Node-style environment variables with plain strings.
 Available as a standalone CLI tool and a
-[Browserify](http://browserify.org) v2 transform.
+[Browserify](http://browserify.org) transform.
 
-Works best in combination with [uglifyify](http://github.com/hughsk/uglifyify).
+Works best in combination with [@browserify/uglifyify](http://github.com/browserify/uglifyify).
 
-## Installation ##
+## Installation
 
 If you're using the module with Browserify:
 
 ``` bash
-npm install @goto-bus-stop/envify browserify
+npm install @browserify/envify browserify
 ```
 
 Or, for the CLI:
 
 ``` bash
-sudo npm install -g @goto-bus-stop/envify
+sudo npm install -g @browserify/envify
 ```
 
-## Usage ##
+## Usage
 
 envify will replace your environment variable checks with ordinary strings -
 only the variables you use will be included, so you don't have to worry about,
@@ -57,12 +55,12 @@ if ("development" === "development") {
 
 The `if` statement will evaluate to `true`, so the code won't be removed.
 
-## CLI Usage ##
+## CLI Usage
 
 With browserify:
 
 ``` bash
-browserify index.js -t envify > bundle.js
+browserify index.js -t @browserify/envify > bundle.js
 ```
 
 Or standalone:
@@ -76,25 +74,25 @@ browserify's [subarg](http://github.com/substack/subarg) syntax, which is
 available in versions 3.25.0 and above:
 
 ``` bash
-browserify index.js -t [ envify --NODE_ENV development ] > bundle.js
-browserify index.js -t [ envify --NODE_ENV production  ] > bundle.js
+browserify index.js -t [ @browserify/envify --NODE_ENV development ] > bundle.js
+browserify index.js -t [ @browserify/envify --NODE_ENV production  ] > bundle.js
 ```
 
-## Module Usage ##
+## Module Usage
 
-**require('envify')**
+**require('@browserify/envify')**
 
 Returns a transform stream that updates based on the Node process'
 `process.env` object.
 
-**require('envify/custom')([environment])**
+**require('@browserify/envify/custom')([environment])**
 
 If you want to stay away from your environment variables, you can supply
 your own object to use in its place:
 
 ``` javascript
 var browserify = require('browserify')
-  , envify = require('envify/custom')
+  , envify = require('@browserify/envify/custom')
   , fs = require('fs')
 
 var b = browserify('main.js')
@@ -106,7 +104,7 @@ b.transform(envify({
 b.bundle().pipe(output)
 ```
 
-## Purging `process.env` ##
+## Purging `process.env`
 
 By default, environment variables that are not defined will be left untouched.
 This is because in some cases, you might want to run an envify transform over
@@ -124,7 +122,7 @@ To do so through the command-line, simply use the subarg syntax and include
 `purge` after `envify`, e.g.:
 
 ``` bash
-browserify index.js -t [ envify purge --NODE_ENV development ]
+browserify index.js -t [ @browserify/envify purge --NODE_ENV development ]
 ```
 
 Or if you're using the module API, you can pass `_: "purge"` into your
@@ -137,7 +135,7 @@ b.transform(envify({
 }))
 ```
 
-## Contributors ##
+## Contributors
 
 * [hughsk](http://github.com/hughsk)
 * [benjamn](http://github.com/benjamn)
